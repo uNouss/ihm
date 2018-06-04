@@ -7,10 +7,7 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -21,7 +18,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class SliderControl implements Initializable, ChangeListener, MapChangeListener {
-
+	private static final int NB_COLORS = 10;
 
 	@FXML
 	private AnchorPane background;
@@ -100,25 +97,33 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 
 	@FXML
 	void cliked(MouseEvent event) {
-		//System.out.println("add "+ hexaColor.getText());
-		System.out.println(shapes.size());
+		if(shapes.size() < NB_COLORS) {
+			//System.out.println("add "+ hexaColor.getText());
+			System.out.println(shapes.size());
 
-		Double w = dcolor.getWidth()/(shapes.size()+1);
-		Rectangle rect = new Rectangle(w,dcolor.getHeight(), hexaColor.getValue());
-		hBoxColors.getChildren().add(rect);
-		shapes.add(rect);
+			Double w = dcolor.getWidth() / (shapes.size() + 1);
+			Rectangle rect = new Rectangle(w, dcolor.getHeight(), hexaColor.getValue());
+			hBoxColors.getChildren().add(rect);
+			shapes.add(rect);
 
-		rect = new Rectangle(w,dcolor.getHeight(), niveauDeGris(hexaColor.getValue()));
-		hBoxGray.getChildren().add(rect);
-		System.out.println(shapes.size()+"   "+w);
-		for(int i = 0; i < shapes.size(); i++){
-			shapes.get(i).setWidth(w);
+			rect = new Rectangle(w, dcolor.getHeight(), niveauDeGris(hexaColor.getValue()));
+			hBoxGray.getChildren().add(rect);
+			System.out.println(shapes.size() + "   " + w);
+			for (int i = 0; i < shapes.size(); i++) {
+				shapes.get(i).setWidth(w);
+			}
+
+
+			colors.add(hexaColor.getValue());
+			//System.out.println(colors.size()+" et "+shapes.size());
+		}else{
+			// Show the error message.
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("ERREUR");
+			alert.setHeaderText("pas plus de "+NB_COLORS);
+
+			alert.showAndWait();
 		}
-
-
-
-		colors.add(hexaColor.getValue());
-		//System.out.println(colors.size()+" et "+shapes.size());
 	}
 
 	private Color niveauDeGris(Color value) {
