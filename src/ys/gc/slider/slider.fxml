@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
@@ -65,22 +66,32 @@
                         <Rectangle fx:id="previewGray" arcHeight="5.0" arcWidth="5.0" height="90.0" layoutX="10.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="172.0" />
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <TextField fx:id="hexaColor" prefHeight="37.0" prefWidth="238.0" text="#FFFFFF" />
-                              <Button fx:id="addButton" mnemonicParsing="false" onMousePressed="#cliked" prefHeight="56.0" prefWidth="250.0" text="AJOUTER LA COULEUR" />
+                              <AnchorPane prefHeight="92.0" prefWidth="192.0" AnchorPane.rightAnchor="0.0">
+                                 <children>
+                                    <ColorPicker fx:id="hexaColor" prefHeight="36.0" prefWidth="238.0" AnchorPane.leftAnchor="0.0" />
+                                    <Button fx:id="addButton" layoutY="36.0" mnemonicParsing="false" onMousePressed="#cliked" prefHeight="56.0" prefWidth="238.0" text="AJOUTER LA COULEUR" AnchorPane.leftAnchor="0.0" />
+                                 </children>
+                              </AnchorPane>
                            </children>
                         </VBox>
                      </items>
                   </SplitPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="dcolor" layoutY="160.0" prefHeight="240.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+            <AnchorPane layoutY="264.0">
                <children>
-                  <PieChart fx:id="pcColors" layoutX="-102.0" layoutY="-95.0" prefHeight="240.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-               </children></AnchorPane>
-            <AnchorPane fx:id="dgray" layoutX="305.0" layoutY="160.0" prefHeight="228.0" prefWidth="308.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <children>
-                  <PieChart fx:id="pcGray" layoutX="-102.0" layoutY="-80.0" prefHeight="240.0" prefWidth="301.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-               </children></AnchorPane>
+                  <AnchorPane fx:id="dcolor" prefHeight="240.0" prefWidth="300.0">
+                     <children>
+                        <HBox fx:id="hBoxColors" prefHeight="240.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="dgray" layoutX="300.0" prefHeight="240.0" prefWidth="300.0">
+                     <children>
+                        <HBox fx:id="hBoxGray" prefHeight="240.0" prefWidth="300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>

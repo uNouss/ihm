@@ -7,12 +7,13 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -50,7 +51,7 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 	private Rectangle previewGray;
 
 	@FXML
-	private TextField hexaColor;
+	private ColorPicker hexaColor;
 
 	@FXML
 	private Button addButton;
@@ -59,13 +60,13 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 	private AnchorPane dcolor;
 
 	@FXML
-	private PieChart pcColors;
+	private HBox hBoxColors;
 
 	@FXML
 	private AnchorPane dgray;
 
 	@FXML
-	private PieChart pcGray;
+	private HBox hBoxGray;
 
 
 	private ObservableList<Rectangle> shapes = FXCollections.observableArrayList();
@@ -86,7 +87,7 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 		valueGreen.setText(String.valueOf(g.intValue()));
 		valueBlue.setText(String.valueOf(b.intValue()));
 
-		hexaColor.setText(String.format("#%02x%02x%02x", r.intValue(), g.intValue(), b.intValue()));
+		hexaColor.setValue(color);
 	}
 
 	@Override
@@ -103,20 +104,25 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 		System.out.println(shapes.size());
 
 		Double w = dcolor.getWidth()/(shapes.size()+1);
-		Rectangle rect = new Rectangle(w,dcolor.getHeight(), Color.valueOf(hexaColor.getText()));
-		dcolor.getChildren().add(rect);
+		Rectangle rect = new Rectangle(w,dcolor.getHeight(), hexaColor.getValue());
+		hBoxColors.getChildren().add(rect);
 		shapes.add(rect);
+
+		rect = new Rectangle(w,dcolor.getHeight(), niveauDeGris(hexaColor.getValue()));
+		hBoxGray.getChildren().add(rect);
 		System.out.println(shapes.size()+"   "+w);
 		for(int i = 0; i < shapes.size(); i++){
 			shapes.get(i).setWidth(w);
 		}
 
-		//rect = new Rectangle(w,dcolor.getHeight(), Color.valueOf(hexaColor.getText()));
-		//dgray.getChildren().add(rect);
 
 
-		colors.add(Color.valueOf(hexaColor.getText()));
+		colors.add(hexaColor.getValue());
 		//System.out.println(colors.size()+" et "+shapes.size());
+	}
+
+	private Color niveauDeGris(Color value) {
+		return niveauDeGris(value.getRed(), value.getGreen(), value.getBlue());
 	}
 
 	private Color niveauDeGris(Double r, Double v, Double b) {
@@ -126,7 +132,7 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 
 	@Override
 	public void onChanged(Change change) {
-		dcolor.getProperties().addListener(this);
-		dgray.getProperties().addListener(this);
+		hBoxColors.getProperties().addListener(this);
+		hBoxGray.getProperties().addListener(this);
 	}
 }
