@@ -5,7 +5,6 @@
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -13,9 +12,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ys.gc.slider.SliderControl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="504.0" prefWidth="600.0" stylesheets="@Slider.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ys.gc.slider.SliderControl">
    <children>
       <AnchorPane fx:id="background" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -43,14 +43,14 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Slider>
-                        <Slider fx:id="blue" majorTickUnit="30.0" max="255.0" minorTickCount="2" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <Slider fx:id="blue" majorTickUnit="30.0" max="255.0" minorTickCount="2" value="255.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Slider>
                         <TextField fx:id="valueRed" text="000" GridPane.columnIndex="1" />
                         <TextField fx:id="valueGreen" text="000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="valueBlue" text="000" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="valueBlue" text="255" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="R" />
                         <Label text="V" GridPane.rowIndex="1" />
                         <Label text="B" GridPane.rowIndex="2" />
@@ -60,25 +60,29 @@
             </AnchorPane>
             <AnchorPane layoutY="166.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <SplitPane dividerPositions="0.5, 0.5" prefHeight="93.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <Rectangle fx:id="previewColor" arcHeight="5.0" arcWidth="5.0" height="90.0" stroke="BLACK" strokeType="INSIDE" width="172.0" />
-                        <Rectangle fx:id="previewGray" arcHeight="5.0" arcWidth="5.0" height="90.0" layoutX="10.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="172.0" />
-                        <VBox prefHeight="200.0" prefWidth="100.0">
+                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Rectangle fx:id="previewColor" arcHeight="5.0" arcWidth="5.0" fill="BLUE" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="172.0" />
+                        <Rectangle fx:id="previewGray" arcHeight="5.0" arcWidth="5.0" fill="#00001c" height="90.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="172.0" />
+                        <VBox prefHeight="200.0" prefWidth="255.0">
                            <children>
                               <AnchorPane prefHeight="92.0" prefWidth="192.0" AnchorPane.rightAnchor="0.0">
                                  <children>
-                                    <ColorPicker fx:id="hexaColor" prefHeight="36.0" prefWidth="238.0" AnchorPane.leftAnchor="0.0" />
-                                    <Button fx:id="addButton" layoutY="36.0" mnemonicParsing="false" onMousePressed="#cliked" prefHeight="56.0" prefWidth="238.0" text="AJOUTER LA COULEUR" AnchorPane.leftAnchor="0.0" />
+                                    <ColorPicker fx:id="hexaColor" prefHeight="36.0" prefWidth="255.0" AnchorPane.leftAnchor="0.0">
+                                       <value>
+                                          <Color blue="1.0" green="0.0" red="0.0" />
+                                       </value>
+                                    </ColorPicker>
+                                    <Button fx:id="addButton" layoutY="36.0" mnemonicParsing="false" onMousePressed="#cliked" prefHeight="54.0" prefWidth="255.0" text="AJOUTER LA COULEUR" AnchorPane.leftAnchor="0.0" />
                                  </children>
                               </AnchorPane>
                            </children>
                         </VBox>
-                     </items>
-                  </SplitPane>
+                     </children>
+                  </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="264.0">
+            <AnchorPane layoutY="264.0" AnchorPane.leftAnchor="0.0">
                <children>
                   <AnchorPane fx:id="dcolor" prefHeight="240.0" prefWidth="300.0">
                      <children>

@@ -65,8 +65,10 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 	@FXML
 	private HBox hBoxGray;
 
+	private SliderApp sliderApp;
 
-	private ObservableList<Rectangle> shapes = FXCollections.observableArrayList();
+	private ObservableList<Rectangle> rColors = FXCollections.observableArrayList();
+	private ObservableList<Rectangle> rGrays = FXCollections.observableArrayList();
 	private ObservableList<Color> colors = FXCollections.observableArrayList();
 
 	@Override
@@ -92,30 +94,35 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 		red.valueProperty().addListener(this);
 		green.valueProperty().addListener(this);
 		blue.valueProperty().addListener(this);
+
+		valueRed.onActionProperty().addListener(this);
+		valueGreen.onActionProperty().addListener(this);
+		valueBlue.onActionProperty().addListener(this);
+
 	}
 
 
 	@FXML
 	void cliked(MouseEvent event) {
-		if(shapes.size() < NB_COLORS) {
-			//System.out.println("add "+ hexaColor.getText());
-			System.out.println(shapes.size());
+		if(rColors.size() < NB_COLORS) {
+			//System.out.println("add "+ hexaColor.getValue());
+			Double w = dcolor.getWidth() / (rColors.size() + 1);
 
-			Double w = dcolor.getWidth() / (shapes.size() + 1);
-			Rectangle rect = new Rectangle(w, dcolor.getHeight(), hexaColor.getValue());
-			hBoxColors.getChildren().add(rect);
-			shapes.add(rect);
+			Color rectFill = hexaColor.getValue();
 
-			rect = new Rectangle(w, dcolor.getHeight(), niveauDeGris(hexaColor.getValue()));
-			hBoxGray.getChildren().add(rect);
-			System.out.println(shapes.size() + "   " + w);
-			for (int i = 0; i < shapes.size(); i++) {
-				shapes.get(i).setWidth(w);
+			Rectangle cRect = new Rectangle(w, dcolor.getHeight(), rectFill);
+			hBoxColors.getChildren().add(cRect);
+			rColors.add(cRect);
+
+			Rectangle gRect = new Rectangle(w, dgray.getHeight(), niveauDeGris(rectFill));
+			hBoxGray.getChildren().add(gRect);
+			rGrays.add(gRect);
+
+			System.out.println(rGrays.size() + "   " + w);
+			for (int i = 0; i < rColors.size(); i++) {
+				rColors.get(i).setWidth(w);
+				rGrays.get(i).setWidth(w);
 			}
-
-
-			colors.add(hexaColor.getValue());
-			//System.out.println(colors.size()+" et "+shapes.size());
 		}else{
 			// Show the error message.
 			Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -127,17 +134,21 @@ public class SliderControl implements Initializable, ChangeListener, MapChangeLi
 	}
 
 	private Color niveauDeGris(Color value) {
-		return niveauDeGris(value.getRed(), value.getGreen(), value.getBlue());
+		return niveauDeGris(value.getRed()*255, value.getGreen()*255, value.getBlue()*255);
 	}
 
-	private Color niveauDeGris(Double r, Double v, Double b) {
+	private Color niveauDeGris(Double r, Double g, Double b) {
 		//NiveauGris = 0.3   Rouge + 0.59   Vert + 0.11   Bleu
-		return Color.grayRgb((int)(0.3*r + 0.59*v + 0.11*b));
+		return Color.grayRgb((int)(0.3*r + 0.59*g + 0.11*b));
 	}
 
 	@Override
 	public void onChanged(Change change) {
 		hBoxColors.getProperties().addListener(this);
 		hBoxGray.getProperties().addListener(this);
+	}
+
+	public void setMainApp(SliderApp mainApp) {
+		this.sliderApp = mainApp;
 	}
 }
